@@ -7,13 +7,43 @@
 
     <title>lenorable site</title>
     <!-- <link rel="stylesheet" href="basic.css"> -->
-    <script src="/js/connectiontest.js" type="module"></script>
-
-    <script src="https://kit.fontawesome.com/76fa0e805d.js" crossorigin="anonymous"></script>
-    <link href='https://fonts.googleapis.com/css?family=Barlow&effect=outline' rel='stylesheet'>
 </head>
 
 <body>
+    <script>
+        async function testCon(){
+            let resp = await fetch("/database/connect", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (resp.ok) {
+                const data = await resp.text();
+                console.log(data);
+            }
+        }
+
+        async function query(query){
+            let data = {
+                "query" : query
+            }
+
+            let resp = await fetch("/database/query", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+                ,body : JSON.stringify(data)
+            });
+
+            if (resp.ok) {
+                const data = await resp.json();
+                console.log(data);
+            }
+        }
+    </script>
     <h1> hallo wereld! </h1>
 </body>
 
