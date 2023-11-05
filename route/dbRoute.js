@@ -2,17 +2,16 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 
-// const JSONStream = require('json-stream');
 
 const pgp = require('pg-promise')();
 
 // Define your PostgreSQL connection configuration
 const dbConfig = {
-    user: 'Wiener-fan',
-    password: 'ciZ7xHbEuAN3cuqc7z0c8',
+    user: 'admin',
+    password: 'Pa$$w0rd',
     host: 'localhost',
-    port: 15432,
-    database: 'luchtvaartmaatschappij',
+    port: 5432,
+    database: 'JennaReview'
 };
 
 // Create a database connection instance
@@ -36,7 +35,7 @@ router.get('/connect', async (req, res) => {
 router.post('/query', async (req, res) => {
     try {
         const data = await db.query(req.body.query);
-        res.status(200).send(data);
+        res.status(200).send( data);
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).send("oopsie doopsie");

@@ -1,17 +1,87 @@
 <!DOCTYPE html>
-<html lang="en-NL">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Lenor Hofschreuder" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenna Altijd Fit</title>
+    <!DOCTYPE html>
+    <html lang="en">
 
-    <title>lenorable site</title>
-    <!-- <link rel="stylesheet" href="basic.css"> -->
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Jenna Altijd Fit</title>
+        <style>
+            /* Styles for a modern and simple design */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+
+            header {
+                background-color: #3498db;
+                color: #fff;
+                padding: 20px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            p {
+                font-size: 18px;
+                line-height: 1.6;
+                margin: 20px;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+            }
+
+            /* Styles for the reviews */
+            #results {
+                margin: 20px;
+            }
+
+            .review-box {
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-bottom: 10px;
+                background-color: #f9f9f9;
+            }
+
+            .review-box strong {
+                font-weight: bold;
+                font-size: 1.2em;
+                color: #333;
+            }
+
+            .review-box p {
+                margin: 10px 0;
+                font-size: 1em;
+                color: #666;
+            }
+
+            .review-box-l {
+                width: 800px;
+                margin: 0 auto;
+                margin-top: 20px;
+                padding: 20px;
+                background-color: #fff;
+            }
+        </style>
+    </head>
 
 <body>
     <script>
-        async function testCon(){
+        async function testCon() {
             let resp = await fetch("/database/connect", {
                 method: "GET",
                 headers: {
@@ -25,26 +95,52 @@
             }
         }
 
-        async function query(query){
+        async function query(query) {
             let data = {
-                "query" : query
+                "query": query
             }
 
             let resp = await fetch("/database/query", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
-                }
-                ,body : JSON.stringify(data)
+                },
+                body: JSON.stringify(data)
             });
 
-            if (resp.ok) {
-                const data = await resp.json();
-                console.log(data);
-            }
+            return await resp.json();
         }
+
+        window.addEventListener('load', async () => {
+            let reviewBox = document.getElementById("review-box");
+
+            console.warn("ok")
+            let data = await query('SELECT * FROM plane;');
+            reviewBox.innerHTML = "<h1> Reviews </h1>";
+
+            data.forEach(element => {
+                reviewBox.innerHTML += `<p>${element.message} - ${element.first_name}</p>`;
+            });
+        })
+
     </script>
-    <h1> hallo wereld! </h1>
+
+    <header>
+        <h1>Welkom bij Sportschool Jenna Altijd Fit</h1>
+    </header>
+    <div class="container">
+        <div id="results"></div>
+        <h2>Over Ons</h2>
+        <p>
+            Jenna Altijd Fit Gym is uw bestemming voor een gezondere en actievere levensstijl. We bieden een breed
+            assortiment fitnessprogramma's, ultramoderne apparatuur en deskundige trainers om je te helpen je
+            fitnessdoelen te bereiken. Of je nu een beginner bent of een ervaren sporter, we hebben voor ieder wat wils.
+            Word vandaag nog lid en begin uw sportieve avontuur!
+        </p>
+    </div>
+
+    <div class="review-box-l" id="review-box">
+    </div>
 </body>
 
 </html>
